@@ -40,40 +40,33 @@ export default function CategoryTemplate({
   getParents(category)
 
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
-      <RefinementList
-        sortBy={sort}
-        data-testid="sort-by-container"
-        hideOptionsPicker
-      />
-      <div className="w-full">
-        <div className="flex flex-row mb-8 text-2xl-semi gap-4">
-          {parents &&
-            parents.map((parent) => (
-              <span key={parent.id} className="text-ui-fg-subtle">
-                <LocalizedClientLink
-                  className="mr-4 hover:text-black"
-                  href={`/categories/${parent.handle}`}
-                  data-testid="sort-by-link"
-                >
-                  {parent.name}
-                </LocalizedClientLink>
-                /
-              </span>
-            ))}
-          <h1 data-testid="category-page-title">{category.name}</h1>
-        </div>
-        {category.description && (
-          <div className="mb-8 text-base-regular">
-            <p>{category.description}</p>
+    <div className="store-page uc-store-page" data-testid="category-container">
+      <div className="store-page-glow" aria-hidden />
+      <div className="content-container flex flex-col small:flex-row small:items-start gap-8 relative z-[1]">
+        <RefinementList sortBy={sort} data-testid="sort-by-container" />
+        <div className="w-full min-w-0">
+          <div className="uc-page-head">
+            <div className="flex flex-wrap items-center gap-2 text-sm text-uc-muted mb-3">
+              {parents.map((parent) => (
+                <span key={parent.id} className="inline-flex items-center gap-2">
+                  <LocalizedClientLink
+                    className="hover:text-uc-ink"
+                    href={`/categories/${parent.handle}`}
+                    data-testid="sort-by-link"
+                  >
+                    {parent.name}
+                  </LocalizedClientLink>
+                  <span>/</span>
+                </span>
+              ))}
+            </div>
+            <p className="uc-eyebrow">Category</p>
+            <h1 data-testid="category-page-title">{category.name}</h1>
+            {category.description && <p>{category.description}</p>}
           </div>
-        )}
-        {category.category_children && (
-          <div className="mb-8 text-base-large">
-            <ul className="grid grid-cols-1 gap-2">
+
+          {!!category.category_children?.length && (
+            <ul className="mb-8 flex flex-wrap gap-2">
               {category.category_children?.map((c) => (
                 <li key={c.id}>
                   <InteractiveLink href={`/categories/${c.handle}`}>
@@ -82,23 +75,24 @@ export default function CategoryTemplate({
                 </li>
               ))}
             </ul>
-          </div>
-        )}
-        <Suspense
-          fallback={
-            <SkeletonProductGrid
-              numberOfProducts={category.products?.length ?? 8}
+          )}
+
+          <Suspense
+            fallback={
+              <SkeletonProductGrid
+                numberOfProducts={category.products?.length ?? 8}
+              />
+            }
+          >
+            <PaginatedProducts
+              sortBy={sort}
+              page={pageNumber}
+              categoryId={category.id}
+              countryCode={countryCode}
+              optionValueIds={optionValueIds}
             />
-          }
-        >
-          <PaginatedProducts
-            sortBy={sort}
-            page={pageNumber}
-            categoryId={category.id}
-            countryCode={countryCode}
-            optionValueIds={optionValueIds}
-          />
-        </Suspense>
+          </Suspense>
+        </div>
       </div>
     </div>
   )
