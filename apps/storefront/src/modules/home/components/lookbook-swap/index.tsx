@@ -9,21 +9,21 @@ const frames = [
     href: "/categories/living",
     image:
       "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1400&q=80",
-    note: "Seat deep. Footprint small.",
+    note: "Seat depth without stealing circulation.",
   },
   {
     label: "Work",
     href: "/categories/work",
     image:
       "https://images.unsplash.com/photo-1593062096033-9a26b09da705?auto=format&fit=crop&w=1400&q=80",
-    note: "Fold away when the day ends.",
+    note: "Wall planes that disappear after hours.",
   },
   {
     label: "Sleep",
     href: "/categories/sleep",
     image:
       "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80",
-    note: "Clear the floor. Keep the calm.",
+    note: "Clear the floor. Keep the rest.",
   },
 ]
 
@@ -51,16 +51,11 @@ export default function LookbookSwap({ tone = "urban" }: { tone?: "urban" | "str
         ))}
         <div className="lookbook-veil" />
         <div className="lookbook-copy content-container">
-          <p className={tone === "urban" ? "uc-eyebrow" : "ps-eyebrow"}>
-            Lookbook
-          </p>
+          <p className="uc-eyebrow">Field survey</p>
           <h2 className="lookbook-title font-display">{frame.label}</h2>
           <p className="lookbook-note">{frame.note}</p>
-          <LocalizedClientLink
-            href={frame.href}
-            className={tone === "urban" ? "uc-btn-primary" : "ps-btn-primary"}
-          >
-            Enter {frame.label}
+          <LocalizedClientLink href={frame.href} className="uc-btn-primary">
+            Open {frame.label} zone
           </LocalizedClientLink>
         </div>
       </div>

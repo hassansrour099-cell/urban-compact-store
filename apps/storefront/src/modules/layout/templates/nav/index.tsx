@@ -9,7 +9,7 @@ import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 
 const links = [
-  { label: "Shop", href: "/store" },
+  { label: "Catalog", href: "/store" },
   { label: "Living", href: "/categories/living" },
   { label: "Sleep", href: "/categories/sleep" },
   { label: "Work", href: "/categories/work" },
@@ -26,7 +26,7 @@ export default async function Nav() {
   return (
     <div className="sticky top-0 inset-x-0 z-50">
       <header className="uc-nav">
-        <nav className="content-container flex h-[4.25rem] items-center justify-between gap-4">
+        <nav className="content-container flex h-[4.5rem] items-center justify-between gap-4">
           <div className="flex min-w-0 flex-1 items-center gap-5">
             <div className="small:hidden">
               <SideMenu
@@ -40,6 +40,7 @@ export default async function Nav() {
               className="uc-brand shrink-0"
               data-testid="nav-store-link"
             >
+              <span className="uc-brand-mark">UC</span>
               Urban Compact
             </LocalizedClientLink>
             <div className="hidden small:flex items-center gap-1">
@@ -70,7 +71,7 @@ export default async function Nav() {
                   href="/cart"
                   data-testid="nav-cart-link"
                 >
-                  Cart <span className="uc-nav-count">0</span>
+                  Bag <span className="uc-nav-count">0</span>
                 </LocalizedClientLink>
               }
             >
@@ -78,6 +79,17 @@ export default async function Nav() {
             </Suspense>
           </div>
         </nav>
+        <div className="uc-ruler content-container">
+          <span>
+            Grid <b>48px</b>
+          </span>
+          <span>
+            Fit system <b>studio → 1BR</b>
+          </span>
+          <span className="hidden xsmall:inline">
+            Spec <b>mm</b>
+          </span>
+        </div>
       </header>
     </div>
   )

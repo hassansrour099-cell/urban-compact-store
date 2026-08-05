@@ -8,7 +8,7 @@ import { getRegion } from "@lib/data/regions"
 
 export const metadata: Metadata = {
   title: "Urban Compact",
-  description: "Furniture sized for small apartments — living, sleep, work, and storage.",
+  description: "Furniture engineered for small-city footprints.",
 }
 
 export default async function Home(props: {
