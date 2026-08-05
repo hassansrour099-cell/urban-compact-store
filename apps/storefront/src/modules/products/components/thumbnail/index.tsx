@@ -13,6 +13,17 @@ type ThumbnailProps = {
   "data-testid"?: string
 }
 
+function resolveImageUrl(
+  thumbnail?: string | null,
+  images?: { url?: string }[] | null
+) {
+  if (thumbnail && thumbnail.trim()) {
+    return thumbnail
+  }
+  const first = images?.find((img) => !!img?.url)?.url
+  return first || null
+}
+
 const Thumbnail: React.FC<ThumbnailProps> = ({
   thumbnail,
   images,
@@ -21,12 +32,12 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   className,
   "data-testid": dataTestid,
 }) => {
-  const initialImage = thumbnail || images?.[0]?.url
+  const initialImage = resolveImageUrl(thumbnail, images)
 
   return (
     <Container
       className={clx(
-        "uc-thumb relative w-full overflow-hidden",
+        "uc-thumb relative w-full overflow-hidden product-thumb",
         className,
         {
           "aspect-[4/5]": size !== "square",
@@ -47,21 +58,26 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
 const ImageOrPlaceholder = ({
   image,
   size,
-}: Pick<ThumbnailProps, "size"> & { image?: string }) => {
-  return image ? (
+}: Pick<ThumbnailProps, "size"> & { image?: string | null }) => {
+  if (!image) {
+    return (
+      <div className="w-full h-full absolute inset-0 flex items-center justify-center bg-black/5">
+        <PlaceholderImage size={size === "small" ? 16 : 24} />
+      </div>
+    )
+  }
+
+  return (
     <Image
       src={image}
-      alt="Thumbnail"
+      alt="Product"
       className="absolute inset-0 object-cover object-center"
       draggable={false}
-      quality={70}
+      quality={75}
       sizes="(max-width: 576px) 280px, (max-width: 768px) 360px, (max-width: 992px) 480px, 800px"
       fill
+      unoptimized
     />
-  ) : (
-    <div className="w-full h-full absolute inset-0 flex items-center justify-center">
-      <PlaceholderImage size={size === "small" ? 16 : 24} />
-    </div>
   )
 }
 
