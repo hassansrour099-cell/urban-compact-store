@@ -37,6 +37,7 @@ const CartDropdown = ({
 
   const subtotal = cartState?.subtotal ?? 0
   const itemRef = useRef<number>(totalItems || 0)
+  const [countPulse, setCountPulse] = useState(false)
 
   const timedOpen = () => {
     open()
@@ -69,9 +70,23 @@ const CartDropdown = ({
   useEffect(() => {
     if (itemRef.current !== totalItems && !pathname.includes("/cart")) {
       timedOpen()
+      setCountPulse(true)
+      const t = window.setTimeout(() => setCountPulse(false), 420)
+      itemRef.current = totalItems
+      return () => window.clearTimeout(t)
     }
+    itemRef.current = totalItems
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [totalItems, itemRef.current])
+  }, [totalItems, pathname])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close()
+    }
+    if (!cartDropdownOpen) return
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [cartDropdownOpen])
 
   return (
     <div
@@ -86,26 +101,31 @@ const CartDropdown = ({
             href="/cart"
             data-testid="nav-cart-link"
           >
-            Cart <span className="nav-cart-count">{totalItems}</span>
+            Bag{" "}
+            <span
+              className={`nav-cart-count${countPulse ? " is-pulse" : ""}`}
+            >
+              {totalItems}
+            </span>
           </LocalizedClientLink>
         </PopoverButton>
         <Transition
           show={cartDropdownOpen}
           as={Fragment}
-          enter="transition ease-out duration-200"
-          enterFrom="opacity-0 translate-y-1"
+          enter="transition ease-out duration-300"
+          enterFrom="opacity-0 translate-y-2"
           enterTo="opacity-100 translate-y-0"
           leave="transition ease-in duration-150"
           leaveFrom="opacity-100 translate-y-0"
-          leaveTo="opacity-0 translate-y-1"
+          leaveTo="opacity-0 translate-y-2"
         >
           <PopoverPanel
             static
-            className="hidden small:block absolute top-[calc(100%+8px)] right-0 w-[min(420px,92vw)] nav-cart-panel"
+            className="hidden small:block absolute top-[calc(100%+8px)] right-0 w-[min(420px,92vw)] nav-cart-panel uc-cart-flyout"
             data-testid="nav-cart-dropdown"
           >
             <div className="nav-cart-panel-head">
-              <h3>Your cart</h3>
+              <h3>Your bag</h3>
             </div>
             {cartState && cartState.items?.length ? (
               <>

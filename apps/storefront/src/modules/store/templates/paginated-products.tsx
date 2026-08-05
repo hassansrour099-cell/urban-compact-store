@@ -1,11 +1,12 @@
 import { listProductsWithSort } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { OptionValueIds } from "@lib/util/product-option-filters"
+import { isUcRoom, type UcRoom } from "@lib/util/uc-room"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 
-const PRODUCT_LIMIT = 12
+const PRODUCT_LIMIT = 24
 
 type PaginatedProductsParams = {
   limit: number
@@ -23,6 +24,7 @@ export default async function PaginatedProducts({
   productsIds,
   countryCode,
   optionValueIds,
+  roomHint,
 }: {
   sortBy?: SortOptions
   page: number
@@ -31,9 +33,10 @@ export default async function PaginatedProducts({
   productsIds?: string[]
   countryCode: string
   optionValueIds?: OptionValueIds
+  roomHint?: string | null
 }) {
   const queryParams: PaginatedProductsParams = {
-    limit: 12,
+    limit: PRODUCT_LIMIT,
   }
 
   if (collectionId) {
@@ -69,20 +72,25 @@ export default async function PaginatedProducts({
   })
 
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
+  const pageRoom: UcRoom | undefined = isUcRoom(roomHint || "")
+    ? (roomHint as UcRoom)
+    : undefined
 
   return (
     <>
       <ul
-        className="grid grid-cols-2 w-full small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8"
+        className={`uc-products-grid${categoryId ? " is-room" : " is-collection"}`}
         data-testid="products-list"
       >
-        {products.map((p) => {
-          return (
-            <li key={p.id}>
-              <ProductPreview product={p} region={region} />
-            </li>
-          )
-        })}
+        {products.map((p) => (
+          <li key={p.id}>
+            <ProductPreview
+              product={p}
+              region={region}
+              roomHint={pageRoom}
+            />
+          </li>
+        ))}
       </ul>
       {totalPages > 1 && (
         <Pagination

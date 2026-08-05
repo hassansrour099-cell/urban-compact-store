@@ -298,8 +298,9 @@ body {
 }
 .uc-footer a:hover {
   color: #fff;
-}\n
-/* ��� Nav + chrome refinements (UC) ��� */
+}
+
+/* Nav + chrome refinements (UC) */
 .uc-nav {
   background: rgba(244, 247, 245, 0.88) !important;
   backdrop-filter: blur(14px) saturate(1.2);
@@ -836,8 +837,8 @@ body {
   justify-content: center;
   padding: 0.7rem 0.9rem;
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(12px);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
   font-size: 0.78rem;
   letter-spacing: 0.08em;
@@ -1032,9 +1033,11 @@ html[data-brand="street"] .brand-body {
 }
 
 html[data-brand="urban"] .filter-shell {
-  background: linear-gradient(165deg, rgba(255,255,255,0.78), rgba(232,238,233,0.9));
+  max-width: none;
+  width: 100%;
+  background: rgba(247, 246, 244, 0.94);
   border-color: var(--uc-line);
-  box-shadow: 0 18px 40px rgba(28, 36, 33, 0.06);
+  box-shadow: none;
   backdrop-filter: blur(10px);
 }
 

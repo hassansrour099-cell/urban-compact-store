@@ -2,11 +2,12 @@ import React, { Suspense } from "react"
 
 import ImageGallery from "@modules/products/components/image-gallery"
 import ProductActions from "@modules/products/components/product-actions"
-import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
 import ProductTabs from "@modules/products/components/product-tabs"
 import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info"
 import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
+import { resolveUcProductMedia } from "@lib/util/uc-product-media"
+import { resolveUcRoom } from "@lib/util/uc-room"
 import { notFound } from "next/navigation"
 import { HttpTypes } from "@medusajs/types"
 
@@ -29,21 +30,37 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
     return notFound()
   }
 
+  const media = resolveUcProductMedia(product)
+  const room = resolveUcRoom({
+    categories: product.categories,
+    handle: product.handle,
+    title: product.title,
+  })
+  const galleryImages: HttpTypes.StoreProductImage[] = media.primary
+    ? [
+        {
+          id: `${product.id}-primary`,
+          url: media.primary,
+        } as HttpTypes.StoreProductImage,
+        ...(media.secondary
+          ? [
+              {
+                id: `${product.id}-detail`,
+                url: media.secondary,
+              } as HttpTypes.StoreProductImage,
+            ]
+          : []),
+      ]
+    : images
+
   return (
-    <>
-      <div
-        className="content-container  flex flex-col small:flex-row small:items-start py-6 relative"
-        data-testid="product-container"
-      >
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
-          <ProductInfo product={product} />
-          <ProductTabs product={product} />
+    <div className="uc-pdp-page" data-uc-room={room}>
+      <div className="uc-pdp" data-testid="product-container">
+        <div className="uc-pdp-gallery">
+          <ImageGallery images={galleryImages} tone="urban" />
         </div>
-        <div className="block w-full relative">
-          <ImageGallery images={images} tone="urban" />
-        </div>
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-12">
-          <ProductOnboardingCta />
+        <div className="uc-pdp-info">
+          <ProductInfo product={product} room={room} />
           <Suspense
             fallback={
               <ProductActions
@@ -55,17 +72,15 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           >
             <ProductActionsWrapper id={product.id} region={region} />
           </Suspense>
+          <ProductTabs product={product} />
         </div>
       </div>
-      <div
-        className="content-container my-16 small:my-32"
-        data-testid="related-products-container"
-      >
+      <div className="uc-related" data-testid="related-products-container">
         <Suspense fallback={<SkeletonRelatedProducts />}>
           <RelatedProducts product={product} countryCode={countryCode} />
         </Suspense>
       </div>
-    </>
+    </div>
   )
 }
 

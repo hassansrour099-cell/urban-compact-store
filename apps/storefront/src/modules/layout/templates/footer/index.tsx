@@ -8,70 +8,64 @@ export default async function Footer() {
 
   return (
     <footer className="uc-footer w-full">
-      <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-10 xsmall:flex-row items-start justify-between py-20">
+      <div className="content-container flex flex-col w-full py-16 small:py-20">
+        <div className="uc-footer-grid">
           <div>
-            <LocalizedClientLink
-              href="/"
-              className="uc-brand text-[#eef2f7] hover:opacity-80"
-            >
-              <span className="uc-brand-mark">UC</span>
+            <LocalizedClientLink href="/" className="uc-brand">
               Urban Compact
             </LocalizedClientLink>
-            <p className="mt-3 max-w-xs text-sm leading-relaxed text-[#9aa8ba]">
-              A spatial system for apartments that can&apos;t afford wasted
-              millimeters.
+            <p className="mt-4 max-w-sm text-sm leading-relaxed opacity-80">
+              An atelier for compact city living — furniture in oak, linen, and
+              steel, designed to leave the room feeling larger than the plan.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-10 text-sm">
-            <div className="flex flex-col gap-y-3">
-              <span className="uc-eyebrow text-[#ff5a1f]">Zones</span>
-              <ul className="flex flex-col gap-2 text-[#c9d2de]">
-                <li>
-                  <LocalizedClientLink className="hover:text-white" href="/store">
-                    Full catalog
+          <div className="flex flex-col gap-y-3 text-sm">
+            <span className="uc-eyebrow" style={{ color: "#d4cdc2" }}>
+              Rooms
+            </span>
+            <ul className="flex flex-col gap-2 opacity-90">
+              <li>
+                <LocalizedClientLink href="/store">
+                  Full collection
+                </LocalizedClientLink>
+              </li>
+              {tops.map((c) => (
+                <li key={c.id}>
+                  <LocalizedClientLink href={`/categories/${c.handle}`}>
+                    {c.name}
                   </LocalizedClientLink>
                 </li>
-                {tops.map((c) => (
-                  <li key={c.id}>
-                    <LocalizedClientLink
-                      className="hover:text-white"
-                      href={`/categories/${c.handle}`}
-                    >
-                      {c.name}
-                    </LocalizedClientLink>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="flex flex-col gap-y-3">
-              <span className="uc-eyebrow text-[#ff5a1f]">Account</span>
-              <ul className="flex flex-col gap-2 text-[#c9d2de]">
-                <li>
-                  <LocalizedClientLink
-                    className="hover:text-white"
-                    href="/account"
-                  >
-                    Sign in
-                  </LocalizedClientLink>
-                </li>
-                <li>
-                  <LocalizedClientLink className="hover:text-white" href="/cart">
-                    Bag
-                  </LocalizedClientLink>
-                </li>
-              </ul>
-            </div>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex flex-col gap-y-3 text-sm">
+            <span className="uc-eyebrow" style={{ color: "#d4cdc2" }}>
+              Visit
+            </span>
+            <ul className="flex flex-col gap-2 opacity-90">
+              <li>
+                <LocalizedClientLink href="/account">Account</LocalizedClientLink>
+              </li>
+              <li>
+                <LocalizedClientLink href="/cart">Bag</LocalizedClientLink>
+              </li>
+              <li>
+                <a href="mailto:hello@urbancompact.studio">
+                  hello@urbancompact.studio
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="flex w-full justify-between border-t border-white/10 py-6 text-[#8b98a8]">
+        <div className="mt-14 flex w-full flex-col gap-2 border-t border-white/10 pt-6 text-sm opacity-60 small:flex-row small:justify-between">
           <Text className="txt-compact-small">
-            © {new Date().getFullYear()} Urban Compact · Spatial OS
+            © {new Date().getFullYear()} Urban Compact
           </Text>
-          <Text className="txt-compact-small font-[family-name:var(--font-uc-mono)] tracking-wider uppercase text-[0.65rem]">
-            Spec units: mm
+          <Text className="txt-compact-small">
+            Oak · Linen · Steel
           </Text>
         </div>
       </div>

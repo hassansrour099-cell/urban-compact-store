@@ -40,13 +40,13 @@ export default function ProductActions({
   const [isAdding, setIsAdding] = useState(false)
   const countryCode = useParams().countryCode as string
 
-  // If there is only 1 variant, preselect the options
+  // Preselect a finish so stock/price resolve immediately
   useEffect(() => {
-    if (product.variants?.length === 1) {
-      const variantOptions = optionsAsKeymap(product.variants[0].options)
-      setOptions(variantOptions ?? {})
-    }
-  }, [product.variants])
+    if (!product.variants?.length) return
+    if (Object.keys(options).length > 0) return
+    const variantOptions = optionsAsKeymap(product.variants[0].options)
+    setOptions(variantOptions ?? {})
+  }, [product.variants, options])
 
   const selectedVariant = useMemo(() => {
     if (!product.variants || product.variants.length === 0) {
@@ -172,15 +172,15 @@ export default function ProductActions({
             !isValidVariant
           }
           variant="primary"
-          className="w-full h-10"
+          className="uc-btn-primary h-12 w-auto min-w-[12rem] self-start rounded-none"
           isLoading={isAdding}
           data-testid="add-product-button"
         >
-          {!selectedVariant && !options
-            ? "Select variant"
-            : !inStock || !isValidVariant
+          {!selectedVariant || !isValidVariant
+            ? "Select finish"
+            : !inStock
             ? "Out of stock"
-            : "Add to cart"}
+            : "Add to bag"}
         </Button>
         <MobileActions
           product={product}
