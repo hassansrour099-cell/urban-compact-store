@@ -8,6 +8,14 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 
+const links = [
+  { label: "Shop", href: "/store" },
+  { label: "Living", href: "/categories/living" },
+  { label: "Sleep", href: "/categories/sleep" },
+  { label: "Work", href: "/categories/work" },
+  { label: "Storage", href: "/categories/storage" },
+]
+
 export default async function Nav() {
   const [regions, locales, currentLocale] = await Promise.all([
     listRegions().then((regions: StoreRegion[]) => regions),
@@ -16,43 +24,53 @@ export default async function Nav() {
   ])
 
   return (
-    <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="uc-nav relative h-16 mx-auto border-b duration-200">
-        <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
-          <div className="flex-1 basis-0 h-full flex items-center">
-            <div className="h-full">
-              <SideMenu regions={regions} locales={locales} currentLocale={currentLocale} />
+    <div className="sticky top-0 inset-x-0 z-50">
+      <header className="uc-nav">
+        <nav className="content-container flex h-[4.25rem] items-center justify-between gap-4">
+          <div className="flex min-w-0 flex-1 items-center gap-5">
+            <div className="small:hidden">
+              <SideMenu
+                regions={regions}
+                locales={locales}
+                currentLocale={currentLocale}
+              />
             </div>
-          </div>
-
-          <div className="flex items-center h-full">
             <LocalizedClientLink
               href="/"
-              className="uc-brand hover:opacity-80"
+              className="uc-brand shrink-0"
               data-testid="nav-store-link"
             >
               Urban Compact
             </LocalizedClientLink>
+            <div className="hidden small:flex items-center gap-1">
+              {links.map((link) => (
+                <LocalizedClientLink
+                  key={link.href}
+                  href={link.href}
+                  className="uc-nav-link"
+                >
+                  {link.label}
+                </LocalizedClientLink>
+              ))}
+            </div>
           </div>
 
-          <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
-            <div className="hidden small:flex items-center gap-x-6 h-full">
-              <LocalizedClientLink
-                className="hover:text-ui-fg-base"
-                href="/account"
-                data-testid="nav-account-link"
-              >
-                Account
-              </LocalizedClientLink>
-            </div>
+          <div className="flex items-center gap-1">
+            <LocalizedClientLink
+              className="uc-nav-link hidden xsmall:inline-flex"
+              href="/account"
+              data-testid="nav-account-link"
+            >
+              Account
+            </LocalizedClientLink>
             <Suspense
               fallback={
                 <LocalizedClientLink
-                  className="hover:text-ui-fg-base flex gap-2"
+                  className="uc-nav-cart"
                   href="/cart"
                   data-testid="nav-cart-link"
                 >
-                  Cart (0)
+                  Cart <span className="uc-nav-count">0</span>
                 </LocalizedClientLink>
               }
             >
