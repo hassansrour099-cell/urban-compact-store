@@ -14,21 +14,15 @@ export default async function ProductPreview({
   isFeatured?: boolean
   region: HttpTypes.StoreRegion
 }) {
-  // const pricedProduct = await listProducts({
-  //   regionId: region.id,
-  //   queryParams: { id: [product.id!] },
-  // }).then(({ response }) => response.products[0])
-
-  // if (!pricedProduct) {
-  //   return null
-  // }
-
   const { cheapestPrice } = getProductPrice({
     product,
   })
 
   return (
-    <LocalizedClientLink href={`/products/${product.handle}`} className="group uc-product-card">
+    <LocalizedClientLink
+      href={`/products/${product.handle}`}
+      className="group uc-product-card block"
+    >
       <div data-testid="product-wrapper">
         <Thumbnail
           thumbnail={product.thumbnail}
@@ -36,11 +30,11 @@ export default async function ProductPreview({
           size="full"
           isFeatured={isFeatured}
         />
-        <div className="flex txt-compact-medium mt-4 justify-between gap-3">
-          <Text className="text-uc-ink" data-testid="product-title">
+        <div className="uc-product-meta">
+          <Text className="uc-product-title" data-testid="product-title">
             {product.title}
           </Text>
-          <div className="flex items-center gap-x-2">
+          <div className="uc-product-price">
             {cheapestPrice && <PreviewPrice price={cheapestPrice} />}
           </div>
         </div>
