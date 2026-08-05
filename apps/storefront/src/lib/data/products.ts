@@ -66,16 +66,18 @@ export const listProducts = async ({
       {
         method: "GET",
         query: {
+          ...queryParams,
           limit,
           offset,
           region_id: region?.id,
+          // Always request product images — callers sometimes override `fields`
+          // without including them, which breaks thumbnails in the UI.
           fields:
-            "*variants.calculated_price,+variants.inventory_quantity,*variants.images,*variants.options,+metadata,+tags,",
-          ...queryParams,
+            "*variants.calculated_price,+variants.inventory_quantity,*variants.images,*variants.options,*images,+thumbnail,+metadata,+tags,",
         },
         headers,
         next,
-        cache: "force-cache",
+        cache: "no-store",
       }
     )
     .then(({ products, count }) => {

@@ -137,8 +137,9 @@ export default async function seedUrbanCompactV1({ container }: ExecArgs) {
         title: product.title,
         handle: product.handle,
         description: product.description,
-        status: ProductStatus.PUBLISHED,
         images: product.images.map((url) => ({ url })),
+        thumbnail: product.images[0],
+        status: ProductStatus.PUBLISHED,
         shipping_profile_id: shippingProfile.id,
         category_ids: product.categoryHandles.map((h) => {
           const id = categoryByHandle.get(h)
