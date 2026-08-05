@@ -101,11 +101,11 @@ const CartDropdown = ({
         >
           <PopoverPanel
             static
-            className="hidden small:block absolute top-[calc(100%+1px)] right-0 bg-white border border-[var(--uc-line)] w-[420px] text-ui-fg-base shadow-lg nav-cart-panel"
+            className="hidden small:block absolute top-[calc(100%+8px)] right-0 w-[min(420px,92vw)] nav-cart-panel"
             data-testid="nav-cart-dropdown"
           >
-            <div className="p-4 flex items-center justify-center">
-              <h3 className="text-large-semi">Cart</h3>
+            <div className="nav-cart-panel-head">
+              <h3>Your cart</h3>
             </div>
             {cartState && cartState.items?.length ? (
               <>
