@@ -28,9 +28,9 @@ const StoreTemplate = ({
         <RefinementList sortBy={sort} />
         <div className="w-full min-w-0">
           <div className="uc-page-head">
-            <p className="uc-eyebrow">Catalog</p>
-            <h1 data-testid="store-page-title">All products</h1>
-            <p>Furniture sized for small apartments.</p>
+            <p className="uc-eyebrow">Catalog index</p>
+            <h1 data-testid="store-page-title">All pieces</h1>
+            <p>Engineered for footprints under pressure.</p>
           </div>
           <Suspense fallback={<SkeletonProductGrid />}>
             <PaginatedProducts

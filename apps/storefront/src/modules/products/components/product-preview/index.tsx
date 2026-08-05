@@ -32,7 +32,7 @@ export default async function ProductPreview({
             isFeatured={isFeatured}
           />
           <span className="uc-product-hover">
-            <span>View piece</span>
+            <span>Open spec</span>
           </span>
         </div>
         <div className="uc-product-meta">

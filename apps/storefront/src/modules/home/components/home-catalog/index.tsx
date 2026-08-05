@@ -34,21 +34,21 @@ export default function HomeCatalog({
       <Marquee
         tone="urban"
         items={[
-          "Living",
-          "Sleep",
-          "Work",
-          "Storage",
-          "Studio-ready",
-          "Quiet materials",
+          "MEASURE TWICE",
+          "FOLD FLAT",
+          "STACK HIGH",
+          "CLEAR FLOOR",
+          "STUDIO FIT",
+          "MM HONEST",
         ]}
       />
 
       <section className="content-container py-16 small:py-24">
         <Reveal>
           <div className="uc-section-head mb-10">
-            <p className="uc-eyebrow">Shop by room</p>
-            <h2 className="font-display text-3xl text-uc-ink small:text-4xl">
-              Four spaces. One footprint.
+            <p className="uc-eyebrow">Zones · 01–04</p>
+            <h2 className="font-display text-uc-ink" style={{ fontSize: "var(--type-display-lg)" }}>
+              Plan by room, not by vibe.
             </h2>
           </div>
         </Reveal>
@@ -59,7 +59,7 @@ export default function HomeCatalog({
           itemClassName="basis-[78%] small:basis-[42%] medium:basis-[28%]"
           autoPlayMs={5200}
         >
-          {tops.map((c) => (
+          {tops.map((c, i) => (
             <LocalizedClientLink
               key={c.id}
               href={`/categories/${c.handle}`}
@@ -74,10 +74,11 @@ export default function HomeCatalog({
                 }}
               />
               <span className="uc-cat-card-body">
-                <span className="font-display text-2xl text-uc-ink">
-                  {c.name}
+                <span className="uc-eyebrow" style={{ color: "var(--uc-muted)" }}>
+                  Zone 0{i + 1}
                 </span>
-                <span className="text-sm text-uc-muted">Browse →</span>
+                <span className="font-display text-uc-ink">{c.name}</span>
+                <span className="text-sm text-uc-muted">Open spec →</span>
               </span>
             </LocalizedClientLink>
           ))}
@@ -91,13 +92,16 @@ export default function HomeCatalog({
           <Reveal>
             <div className="uc-section-head mb-10 flex flex-col gap-4 small:flex-row small:items-end small:justify-between">
               <div>
-                <p className="uc-eyebrow">Featured pieces</p>
-                <h2 className="font-display text-3xl text-uc-ink small:text-4xl">
-                  Designed to take less space
+                <p className="uc-eyebrow">Kit index</p>
+                <h2
+                  className="font-display text-uc-ink"
+                  style={{ fontSize: "var(--type-display-lg)" }}
+                >
+                  Pieces that earn their footprint.
                 </h2>
               </div>
               <LocalizedClientLink href="/store" className="uc-link-underline">
-                View all
+                Full index
               </LocalizedClientLink>
             </div>
           </Reveal>
@@ -126,13 +130,16 @@ export default function HomeCatalog({
           <div className="uc-split-veil absolute inset-0" aria-hidden />
           <div className="relative z-10 content-container flex min-h-[460px] items-center py-16">
             <div className="max-w-lg uc-glass-panel">
-              <p className="uc-eyebrow">Made for city living</p>
-              <h2 className="font-display text-3xl text-uc-ink small:text-5xl">
-                Quiet forms. Honest materials.
+              <p className="uc-eyebrow">Material protocol</p>
+              <h2
+                className="font-display text-uc-ink"
+                style={{ fontSize: "var(--type-display-md)" }}
+              >
+                Oak. Walnut. White. No filler finishes.
               </h2>
-              <p className="mt-4 text-uc-ink/75 leading-relaxed">
-                Oak, walnut, and white finishes—chosen to calm small rooms
-                instead of crowding them.
+              <p className="mt-4 text-uc-muted leading-relaxed">
+                Every finish exists to expand perceived space—not decorate over
+                a bad footprint.
               </p>
             </div>
           </div>
@@ -142,7 +149,7 @@ export default function HomeCatalog({
       <Marquee
         tone="urban"
         speed="slow"
-        items={["Under 60″ sofas", "Nesting tables", "Wall desks", "Slim storage"]}
+        items={["1480mm SOFAS", "NESTING SETS", "WALL DESKS", "5-SHELF SLIM"]}
       />
     </div>
   )
