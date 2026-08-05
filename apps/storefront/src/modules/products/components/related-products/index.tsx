@@ -1,6 +1,8 @@
 import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { HttpTypes } from "@medusajs/types"
+import Carousel from "@modules/common/components/carousel"
+import Reveal from "@modules/common/components/reveal"
 import Product from "../product-preview"
 
 type RelatedProductsProps = {
@@ -18,52 +20,45 @@ export default async function RelatedProducts({
     return null
   }
 
-  // edit this function to define your related products logic
-  const queryParams: HttpTypes.StoreProductListParams = {}
+  const queryParams: HttpTypes.StoreProductListParams = {
+    limit: 8,
+    is_giftcard: false,
+  }
   if (region?.id) {
     queryParams.region_id = region.id
   }
-  if (product.collection_id) {
-    queryParams.collection_id = [product.collection_id]
-  }
-  if (product.tags) {
-    queryParams.tag_id = product.tags
-      .map((t) => t.id)
-      .filter(Boolean) as string[]
-  }
-  queryParams.is_giftcard = false
 
-  const products = await listProducts({
+  let products = await listProducts({
     queryParams,
     countryCode,
-  }).then(({ response }) => {
-    return response.products.filter(
-      (responseProduct) => responseProduct.id !== product.id
-    )
-  })
+  }).then(({ response }) =>
+    response.products.filter((p) => p.id !== product.id)
+  )
 
   if (!products.length) {
     return null
   }
 
   return (
-    <div className="product-page-constraint">
-      <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-base-regular text-gray-600 mb-6">
-          Related products
-        </span>
-        <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
-        </p>
-      </div>
+    <div className="content-container py-16 small:py-20">
+      <Reveal>
+        <div className="mb-10">
+          <p className="uc-eyebrow">More to explore</p>
+          <h2 className="font-display text-3xl text-uc-ink small:text-4xl">
+            You might also like
+          </h2>
+        </div>
+      </Reveal>
 
-      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
-        {products.map((product) => (
-          <li key={product.id}>
-            <Product region={region} product={product} />
-          </li>
+      <Carousel
+        tone="urban"
+        label="Related products"
+        itemClassName="basis-[72%] xsmall:basis-[46%] small:basis-[30%] medium:basis-[23%]"
+      >
+        {products.map((p) => (
+          <Product key={p.id} region={region} product={p} isFeatured />
         ))}
-      </ul>
+      </Carousel>
     </div>
   )
 }
