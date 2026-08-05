@@ -1,9 +1,7 @@
 "use client"
 
-import * as Accordion from "@radix-ui/react-accordion"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
-import { ChevronDownMini } from "@medusajs/icons"
 import { sdk } from "@lib/config"
 import { HttpTypes } from "@medusajs/types"
 import clsx from "clsx"
@@ -13,12 +11,39 @@ type OptionsPickerProps = {
   setOptionValueIds: (valueIds: string[]) => void
 }
 
+const APPAREL_SIZE =
+  /^(xxs|xs|s|m|l|xl|xxl|2xl|3xl|small|medium|large)$/i
+const APPAREL_COLOR =
+  /^(black|white|blue|red|green|navy|grey|gray|beige|pink|yellow|orange|purple|brown)$/i
+
+function isApparelNoiseOption(option: HttpTypes.StoreProductOption) {
+  const title = (option.title || "").toLowerCase().trim()
+  const values = option.values?.map((v) => (v.value || "").trim()) || []
+
+  if (title === "size" || title.includes("size")) {
+    const apparelish =
+      values.length > 0 &&
+      values.every((v) => APPAREL_SIZE.test(v) || /^\d{1,2}$/.test(v))
+    return apparelish || title === "size"
+  }
+
+  // Starter apparel Color (Black/White) — not furniture finishes
+  if (title === "color" || title === "colour") {
+    return (
+      values.length > 0 &&
+      values.every((v) => APPAREL_COLOR.test(v)) &&
+      !values.some((v) => /oak|walnut|linen|steel|ash|oak/i.test(v))
+    )
+  }
+
+  return false
+}
+
 const OptionsPicker = ({
   selectedValueIds,
   setOptionValueIds,
 }: OptionsPickerProps) => {
   const [options, setOptions] = useState<HttpTypes.StoreProductOption[]>([])
-  const [openItems, setOpenItems] = useState<string[]>([])
 
   useEffect(() => {
     const fetchOptions = async () => {
@@ -44,117 +69,70 @@ const OptionsPicker = ({
     fetchOptions()
   }, [])
 
-  useEffect(() => {
-    if (options.length) {
-      setOpenItems(options.map((option) => option.id))
-    }
-  }, [options])
+  const furnitureOptions = useMemo(
+    () => options.filter((option) => !isApparelNoiseOption(option)),
+    [options]
+  )
 
-  if (!options.length) {
+  if (!furnitureOptions.length) {
     return null
   }
 
   return (
-    <div className="filter-options">
-      <div className="flex items-center justify-between px-1">
-        <span className="filter-group-title">
-          Options
-        </span>
-      </div>
-      <Accordion.Root
-        type="multiple"
-        value={openItems}
-        onValueChange={(values) => setOpenItems(values as string[])}
-        className="flex flex-col gap-y-3 pr-6"
-      >
-        {options.map((option) => {
-          const values =
-            option.values
-              ?.map((value) => ({
-                id: value.id,
-                label: value.value,
-              }))
-              .filter(
-                (value): value is { id: string; label: string } =>
-                  !!value.id && !!value.label
-              ) || []
+    <div className="filter-options uc-text-options">
+      {furnitureOptions.map((option) => {
+        const values =
+          option.values
+            ?.map((value) => ({
+              id: value.id,
+              label: value.value,
+            }))
+            .filter(
+              (value): value is { id: string; label: string } =>
+                !!value.id && !!value.label
+            ) || []
 
-          if (!values.length) {
-            return null
-          }
+        if (!values.length) {
+          return null
+        }
 
-          const toggleValue = (valueId: string) => {
-            const isSelected = selectedValueIds.includes(valueId)
-            const nextSelections = isSelected
-              ? selectedValueIds.filter((id) => id !== valueId)
-              : [...selectedValueIds, valueId]
+        const toggleValue = (valueId: string) => {
+          const isSelected = selectedValueIds.includes(valueId)
+          const nextSelections = isSelected
+            ? selectedValueIds.filter((id) => id !== valueId)
+            : [...selectedValueIds, valueId]
 
-            setOptionValueIds(Array.from(new Set(nextSelections)))
-          }
+          setOptionValueIds(Array.from(new Set(nextSelections)))
+        }
 
-          const isOpen = openItems.includes(option.id)
-          const selectedCount = values.filter((value) =>
-            selectedValueIds.includes(value.id)
-          ).length
+        return (
+          <div key={option.id} className="uc-text-option-group">
+            <span className="filter-group-title">
+              {option.title || "Finish"}
+            </span>
+            <div className="uc-text-option-list" role="list">
+              {values.map((value) => {
+                const isSelected = selectedValueIds.includes(value.id)
 
-          return (
-            <Accordion.Item
-              key={option.id}
-              value={option.id}
-              className="overflow-hidden"
-            >
-              <Accordion.Header>
-                <Accordion.Trigger className="flex w-full items-center justify-between py-3 text-left">
-                  <div className="flex items-center gap-2">
-                    <span className="txt-compact-small-plus text-ui-fg-base">
-                      {option.title || "Option"}
-                    </span>
-                    <span className="txt-compact-small-plus text-ui-fg-muted">
-                      ({selectedCount})
-                    </span>
-                  </div>
-                  <span
-                    className={clsx(
-                      "flex h-7 w-7 items-center justify-center text-ui-fg-muted transition-transform duration-150",
-                      {
-                        "rotate-180": isOpen,
-                      }
-                    )}
+                return (
+                  <button
+                    key={value.id}
+                    type="button"
+                    role="listitem"
+                    onClick={() => toggleValue(value.id)}
+                    className={clsx("uc-text-option", {
+                      "is-active": isSelected,
+                    })}
+                    aria-pressed={isSelected}
                   >
-                    <ChevronDownMini />
-                  </span>
-                </Accordion.Trigger>
-              </Accordion.Header>
-              <Accordion.Content className="pb-4 pt-1">
-                <div className="flex flex-wrap gap-2">
-                  {values.map((value) => {
-                    const isSelected = selectedValueIds.includes(value.id)
-
-                    return (
-                      <button
-                        key={value.id}
-                        onClick={() => toggleValue(value.id)}
-                        className={clsx(
-                          "border-ui-border-base border text-small-regular h-10 rounded-rounded px-3 flex items-center transition-colors duration-150",
-                          {
-                            "border-ui-border-interactive text-ui-fg-base":
-                              isSelected,
-                            "text-ui-fg-muted hover:text-ui-fg-base":
-                              !isSelected,
-                          }
-                        )}
-                        aria-pressed={isSelected}
-                      >
-                        {value.label}
-                      </button>
-                    )
-                  })}
-                </div>
-              </Accordion.Content>
-            </Accordion.Item>
-          )
-        })}
-      </Accordion.Root>
+                    {value.label}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }

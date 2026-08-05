@@ -1,0 +1,949 @@
+/* Urban Compact — Editorial Material Modern
+   Governing refinement layer. Loaded after urban-identity + smooth-ui. */
+
+html[data-brand="urban"] {
+  --uc-plaster: #ededec;
+  --uc-paper: #f7f6f4;
+  --uc-ink: #1c1917;
+  --uc-graphite: #4f4b46;
+  --uc-oak: #5c4033;
+  --uc-steel: #8e908c;
+  --uc-linen: #d4cdc2;
+  --uc-copper: #a65d3f;
+  --uc-line: rgba(28, 25, 23, 0.12);
+  --uc-line-strong: rgba(28, 25, 23, 0.22);
+
+  --uc-sage: var(--uc-oak);
+  --uc-mist: var(--uc-linen);
+  --uc-muted: var(--uc-graphite);
+  --uc-chalk: var(--uc-paper);
+  --uc-tape: var(--uc-oak);
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 16px;
+  --s-4: 24px;
+  --s-5: 32px;
+  --s-6: 48px;
+  --s-7: 64px;
+  --s-8: 96px;
+
+  --type-hero: clamp(4rem, 9vw, 7.25rem);
+  --type-display-xl: var(--type-hero);
+  --type-display-lg: clamp(2.75rem, 5vw, 4.25rem);
+  --type-display-md: clamp(2.25rem, 3.5vw, 3.25rem);
+  --type-price: clamp(1.25rem, 2vw, 1.5rem);
+  --type-body: 1.0625rem;
+  --type-label: 0.6875rem;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-settle: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ——— Base atmosphere ——— */
+html[data-brand="urban"],
+html[data-brand="urban"] body.uc-atelier,
+html[data-brand="urban"] .brand-body {
+  /* Earthen diagonal: warm oak/linen at top-right → cooler plaster at bottom-left */
+  background-color: #e6e2da !important;
+  background-image: linear-gradient(
+    to bottom left,
+    #c4b5a4 0%,
+    #d8cfc3 22%,
+    #e8e4dc 48%,
+    #ebe8e2 72%,
+    #e4ddd2 100%
+  ) !important;
+  background-attachment: fixed !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  color: var(--uc-ink) !important;
+}
+
+html[data-brand="urban"] body.uc-atelier,
+html[data-brand="urban"] .brand-body {
+  position: relative;
+  isolation: isolate;
+  font-family: var(--font-uc-sans), Manrope, system-ui, sans-serif !important;
+  font-weight: 500;
+  font-size: var(--type-body);
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* Soft grain + warm depth veil — keeps the diagonal readable */
+html[data-brand="urban"] body.uc-atelier::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(
+      80% 60% at 100% 0%,
+      rgba(92, 64, 51, 0.14),
+      transparent 55%
+    ),
+    radial-gradient(
+      70% 50% at 0% 100%,
+      rgba(212, 205, 194, 0.45),
+      transparent 60%
+    ),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  animation: uc-field-breathe 16s var(--ease-settle) infinite alternate;
+}
+
+@keyframes uc-field-breathe {
+  0% { opacity: 0.75; }
+  100% { opacity: 1; }
+}
+
+/* Hard-kill soft radius + drop shadows */
+html[data-brand="urban"] *,
+html[data-brand="urban"] *::before,
+html[data-brand="urban"] *::after {
+  border-radius: 0 !important;
+}
+
+html[data-brand="urban"] .rounded-lg,
+html[data-brand="urban"] .rounded-md,
+html[data-brand="urban"] .rounded,
+html[data-brand="urban"] .rounded-full,
+html[data-brand="urban"] [class*="rounded"] {
+  border-radius: 0 !important;
+}
+
+/* ——— Type ——— */
+html[data-brand="urban"] .font-display,
+html[data-brand="urban"] .uc-brand,
+html[data-brand="urban"] .uc-hero-title,
+html[data-brand="urban"] .uc-page-head h1,
+html[data-brand="urban"] .uc-product-title,
+html[data-brand="urban"] .uc-pdp-title,
+html[data-brand="urban"] .filter-shell-title,
+html[data-brand="urban"] .lookbook-title,
+html[data-brand="urban"] .nav-cart-panel-head h3,
+html[data-brand="urban"] .uc-kit-close-title,
+html[data-brand="urban"] .uc-section-intro h2 {
+  font-family: var(--font-uc-display), "Instrument Serif", Georgia, serif !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.02em !important;
+  color: var(--uc-ink) !important;
+}
+
+html[data-brand="urban"] .uc-eyebrow,
+html[data-brand="urban"] .uc-meta,
+html[data-brand="urban"] .filter-shell-kicker,
+html[data-brand="urban"] .filter-group-title,
+html[data-brand="urban"] .uc-finish-label,
+html[data-brand="urban"] .brand-marquee-item {
+  font-family: var(--font-uc-sans), Manrope, sans-serif !important;
+  font-size: var(--type-label) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  color: var(--uc-oak) !important;
+}
+
+html[data-brand="urban"] .uc-atelier-hero .uc-hero-title {
+  font-size: var(--type-hero) !important;
+  line-height: 1.02 !important;
+  max-width: 12ch;
+  color: #f7f6f4 !important;
+}
+
+html[data-brand="urban"] .uc-page-head h1,
+html[data-brand="urban"] .uc-pdp-title {
+  font-size: var(--type-display-md) !important;
+  line-height: 1.1;
+}
+
+html[data-brand="urban"] .uc-section-intro h2,
+html[data-brand="urban"] .uc-section-intro .font-display,
+html[data-brand="urban"] .lookbook-title,
+html[data-brand="urban"] .uc-kit-close-title {
+  font-size: var(--type-display-lg) !important;
+  line-height: 1.08;
+}
+
+html[data-brand="urban"] .uc-brand {
+  font-size: clamp(1.5rem, 2.2vw, 1.85rem) !important;
+}
+
+html[data-brand="urban"] .uc-pdp-price,
+html[data-brand="urban"] [data-testid="product-price"],
+html[data-brand="urban"] .uc-product-price {
+  font-family: var(--font-uc-sans), Manrope, sans-serif !important;
+  font-size: var(--type-price) !important;
+  font-weight: 500 !important;
+  color: var(--uc-oak) !important;
+  letter-spacing: 0.02em;
+}
+
+html[data-brand="urban"] .uc-copper,
+html[data-brand="urban"] .uc-sale-tag {
+  color: var(--uc-copper) !important;
+  border-color: var(--uc-copper) !important;
+}
+
+/* ——— Edge language: structural square frame ——— */
+html[data-brand="urban"] .uc-frame,
+html[data-brand="urban"] .uc-page-head,
+html[data-brand="urban"] .filter-shell,
+html[data-brand="urban"] .uc-pdp-info,
+html[data-brand="urban"] .uc-pdp-gallery .product-gallery-main,
+html[data-brand="urban"] .uc-cart-page .bg-white,
+html[data-brand="urban"] .nav-cart-panel,
+html[data-brand="urban"] .uc-product-card .uc-product-media,
+html[data-brand="urban"] .uc-room-card,
+html[data-brand="urban"] .uc-nav-search-panel {
+  border: 1px solid var(--uc-line) !important;
+  box-shadow: none !important;
+  background-clip: padding-box;
+}
+
+html[data-brand="urban"] .uc-page-head,
+html[data-brand="urban"] .uc-pdp-info,
+html[data-brand="urban"] .filter-shell,
+html[data-brand="urban"] .uc-cart-page .bg-white {
+  border-color: var(--uc-line-strong) !important;
+  box-shadow: inset 0 0 0 1px rgba(28, 25, 23, 0.04) !important;
+  background: var(--uc-paper) !important;
+}
+
+html[data-brand="urban"] .uc-product-card {
+  box-shadow: none !important;
+}
+
+html[data-brand="urban"] .uc-product-card .uc-product-shell,
+html[data-brand="urban"] .uc-product-shell {
+  border: 1px solid var(--uc-line);
+  background: var(--uc-paper);
+  transition: border-color 0.26s var(--ease-settle);
+}
+
+html[data-brand="urban"] .uc-product-card:hover .uc-product-shell,
+html[data-brand="urban"] a.uc-product-card:hover .uc-product-media {
+  border-color: var(--uc-oak) !important;
+}
+
+/* ——— Buttons ——— */
+html[data-brand="urban"] .uc-btn-primary,
+html[data-brand="urban"] .uc-btn-ghost,
+html[data-brand="urban"] .uc-pdp-page .uc-btn-primary,
+html[data-brand="urban"] .uc-pdp .uc-btn-primary,
+html[data-brand="urban"] button[data-testid="add-product-button"],
+html[data-brand="urban"] [data-uc-room] .uc-btn-primary,
+html[data-brand="urban"] [data-uc-room] button[data-testid="add-product-button"] {
+  background: var(--uc-ink) !important;
+  color: var(--uc-paper) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  clip-path: none !important;
+  font-family: var(--font-uc-sans), Manrope, sans-serif !important;
+  font-size: var(--type-label) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  padding: var(--s-3) var(--s-5) !important;
+  transition: background 0.26s var(--ease-settle), color 0.26s var(--ease-settle) !important;
+}
+
+html[data-brand="urban"] .uc-btn-primary:hover,
+html[data-brand="urban"] .uc-pdp-page .uc-btn-primary:hover,
+html[data-brand="urban"] .uc-pdp .uc-btn-primary:hover,
+html[data-brand="urban"] button[data-testid="add-product-button"]:hover,
+html[data-brand="urban"] [data-uc-room] .uc-btn-primary:hover,
+html[data-brand="urban"] [data-uc-room] button[data-testid="add-product-button"]:hover {
+  background: var(--uc-oak) !important;
+  color: var(--uc-paper) !important;
+}
+
+html[data-brand="urban"] .uc-btn-ghost {
+  background: transparent !important;
+  color: var(--uc-ink) !important;
+  border: 1px solid var(--uc-line-strong) !important;
+  border-radius: 0 !important;
+  clip-path: none !important;
+  padding: var(--s-3) var(--s-5) !important;
+  font-size: var(--type-label) !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  transition: border-color 0.26s var(--ease-settle), background 0.26s var(--ease-settle) !important;
+}
+
+html[data-brand="urban"] .uc-btn-ghost:hover {
+  border-color: var(--uc-oak) !important;
+  background: rgba(92, 64, 51, 0.06) !important;
+}
+
+/* ——— Hero ambient ——— */
+html[data-brand="urban"] .uc-atelier-hero {
+  position: relative;
+}
+
+html[data-brand="urban"] .uc-atelier-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    70% 60% at 18% 12%,
+    rgba(247, 246, 244, 0.22),
+    transparent 62%
+  );
+  animation: uc-ambient-breathe 10s var(--ease-settle) infinite alternate;
+}
+
+html[data-brand="urban"] .uc-atelier-hero-copy {
+  position: relative;
+  z-index: 2;
+}
+
+html[data-brand="urban"] .uc-atelier-hero .uc-eyebrow {
+  color: var(--uc-linen) !important;
+}
+
+@keyframes uc-ambient-breathe {
+  0% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+/* ——— Background rhythm ——— */
+html[data-brand="urban"] .uc-surface-linen,
+html[data-brand="urban"] .filter-shell {
+  background: var(--uc-paper) !important;
+}
+
+/* Finish strip — warm earth, never stark white */
+html[data-brand="urban"] .uc-finish-strip {
+  background: linear-gradient(
+    to bottom left,
+    #d4c8ba 0%,
+    #e2dbd1 50%,
+    #ddd6cc 100%
+  ) !important;
+  border-color: rgba(28, 25, 23, 0.12) !important;
+}
+
+html[data-brand="urban"] .uc-finish-chip {
+  background: transparent !important;
+}
+
+html[data-brand="urban"] .uc-finish-chip.is-active,
+html[data-brand="urban"] .uc-finish-chip:hover {
+  background: rgba(92, 64, 51, 0.08) !important;
+}
+
+/* Featured pieces — one quiet gallery band, not a card deck */
+html[data-brand="urban"] .uc-featured {
+  position: relative;
+  background: transparent !important;
+  color: var(--uc-ink) !important;
+  border: 0 !important;
+  padding-block: var(--s-8) var(--s-7) !important;
+  overflow: visible;
+}
+
+html[data-brand="urban"] .uc-featured-ground {
+  display: block !important;
+  inset: 0;
+  background: linear-gradient(
+    to bottom left,
+    rgba(196, 181, 164, 0.5) 0%,
+    rgba(232, 228, 220, 0.72) 42%,
+    rgba(237, 237, 236, 0.55) 100%
+  ) !important;
+  border-block: 1px solid var(--uc-line);
+  opacity: 1 !important;
+}
+
+html[data-brand="urban"] .uc-featured-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+html[data-brand="urban"] .uc-featured-head {
+  margin-bottom: var(--s-6) !important;
+  padding-bottom: var(--s-4);
+  border-bottom: 1px solid var(--uc-line);
+  gap: var(--s-4) !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-eyebrow {
+  color: var(--uc-oak) !important;
+}
+
+html[data-brand="urban"] .uc-featured-title {
+  color: var(--uc-ink) !important;
+  font-size: var(--type-display-lg) !important;
+  max-width: 18ch;
+}
+
+html[data-brand="urban"] .uc-featured-link {
+  color: var(--uc-oak) !important;
+}
+
+html[data-brand="urban"] .uc-featured-link:hover {
+  color: var(--uc-ink) !important;
+}
+
+html[data-brand="urban"] .uc-featured-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  column-gap: var(--s-5) !important;
+  row-gap: var(--s-6) !important;
+  max-width: none !important;
+  align-items: start !important;
+}
+
+/* Kill stagger + opacity ghosts that washed cards white */
+html[data-brand="urban"] .uc-featured-grid > *,
+html[data-brand="urban"] .uc-featured-grid > *:nth-child(2),
+html[data-brand="urban"] .uc-featured-grid > *:nth-child(5),
+html[data-brand="urban"] .uc-featured-grid.is-in > * {
+  margin-top: 0 !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-shell {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  gap: 0 !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-frame {
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  clip-path: none !important;
+  box-shadow: none !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-media {
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: rgba(212, 205, 194, 0.35) !important;
+  aspect-ratio: 4 / 5 !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-card:hover .uc-product-media {
+  opacity: 0.92;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-meta {
+  margin-top: var(--s-3) !important;
+  padding-top: var(--s-2);
+  border-top: 1px solid rgba(28, 25, 23, 0.1);
+}
+
+@media (max-width: 900px) {
+  html[data-brand="urban"] .uc-featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: var(--s-4) !important;
+  }
+}
+
+@media (max-width: 560px) {
+  html[data-brand="urban"] .uc-featured-grid {
+    grid-template-columns: 1fr 1fr !important;
+    column-gap: var(--s-3) !important;
+    row-gap: var(--s-4) !important;
+  }
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-card .uc-product-title,
+html[data-brand="urban"] .uc-featured .uc-product-title,
+html[data-brand="urban"] .uc-featured a .uc-product-title {
+  color: var(--uc-ink) !important;
+  -webkit-text-fill-color: var(--uc-ink) !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-card .uc-product-room,
+html[data-brand="urban"] .uc-featured .uc-product-room,
+html[data-brand="urban"] .uc-featured .uc-product-finish,
+html[data-brand="urban"] .uc-featured .uc-meta {
+  color: var(--uc-graphite) !important;
+  -webkit-text-fill-color: var(--uc-graphite) !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-card .uc-product-price,
+html[data-brand="urban"] .uc-featured .uc-product-price {
+  color: var(--uc-ink) !important;
+  -webkit-text-fill-color: var(--uc-ink) !important;
+  font-weight: 500 !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-card .uc-product-finish,
+html[data-brand="urban"] .uc-featured .uc-product-finish {
+  color: var(--uc-graphite) !important;
+  -webkit-text-fill-color: var(--uc-graphite) !important;
+}
+
+html[data-brand="urban"] .uc-featured .uc-product-hover {
+  color: var(--uc-ink) !important;
+  text-shadow: 0 1px 2px rgba(247, 246, 244, 0.7);
+}
+
+html[data-brand="urban"] .uc-surface-oak-wash,
+html[data-brand="urban"] .uc-rooms,
+html[data-brand="urban"] .uc-lookbook {
+  background:
+    linear-gradient(180deg, rgba(92, 64, 51, 0.08), rgba(92, 64, 51, 0.04)),
+    var(--uc-plaster) !important;
+}
+
+/* Closing atelier — restore walnut/brown field (not paper) */
+html[data-brand="urban"] .uc-atelier-close,
+html[data-brand="urban"] .uc-atelier-close.uc-closing,
+html[data-brand="urban"] .uc-atelier-close.uc-kit-close {
+  background:
+    radial-gradient(90% 80% at 0% 100%, rgba(92, 64, 51, 0.4), transparent 55%),
+    linear-gradient(160deg, #3f2b22 0%, #2a1c16 55%, #1c1917 100%) !important;
+  border-top: 1px solid rgba(212, 205, 194, 0.12) !important;
+  border-bottom: 0 !important;
+  color: #f7f6f4 !important;
+  padding-block: var(--s-8) !important;
+}
+
+html[data-brand="urban"] .uc-atelier-close .uc-eyebrow {
+  color: var(--uc-linen) !important;
+}
+
+html[data-brand="urban"] .uc-atelier-close .uc-atelier-close-title,
+html[data-brand="urban"] .uc-atelier-close .uc-kit-close-title {
+  color: #f7f6f4 !important;
+}
+
+html[data-brand="urban"] .uc-atelier-close p {
+  color: rgba(247, 246, 244, 0.78) !important;
+}
+
+html[data-brand="urban"] .uc-atelier-close .uc-btn-primary {
+  background: #f7f6f4 !important;
+  color: var(--uc-ink) !important;
+}
+
+html[data-brand="urban"] .uc-atelier-close .uc-btn-primary:hover {
+  background: var(--uc-linen) !important;
+}
+
+/* Category page head — room wash once */
+html[data-brand="urban"] .uc-store-page .uc-page-head {
+  background:
+    linear-gradient(180deg, var(--uc-room-wash), transparent 120%),
+    var(--uc-paper) !important;
+  padding: var(--s-5) var(--s-5) var(--s-4) !important;
+  margin-bottom: var(--s-5);
+}
+
+html[data-brand="urban"] .uc-store-page .uc-page-head h1 {
+  color: var(--uc-ink) !important;
+}
+
+/* ——— Nav ——— */
+html[data-brand="urban"] .uc-nav {
+  background: rgba(237, 237, 236, 0.94) !important;
+  border-bottom: 1px solid var(--uc-line) !important;
+  backdrop-filter: blur(12px);
+  box-shadow: none !important;
+}
+
+html[data-brand="urban"] .uc-nav-link:hover,
+html[data-brand="urban"] .uc-nav-link:focus-visible,
+html[data-brand="urban"] .uc-nav-link.is-active {
+  color: var(--uc-oak) !important;
+  text-decoration-color: var(--uc-oak);
+}
+
+html[data-brand="urban"] .uc-nav-cart,
+html[data-brand="urban"] .nav-cart-trigger {
+  background: var(--uc-ink) !important;
+  color: var(--uc-paper) !important;
+  transition: background 0.26s var(--ease-settle) !important;
+}
+
+html[data-brand="urban"] .uc-nav-cart:hover,
+html[data-brand="urban"] .nav-cart-trigger:hover {
+  background: var(--uc-oak) !important;
+}
+
+html[data-brand="urban"] .nav-cart-count {
+  background: var(--uc-linen) !important;
+  color: var(--uc-ink) !important;
+}
+
+html[data-brand="urban"] .uc-nav-mega {
+  background: var(--uc-paper) !important;
+  border-bottom: 1px solid var(--uc-line-strong) !important;
+  box-shadow: none !important;
+}
+
+/* ——— Finish strip ——— */
+html[data-brand="urban"] .uc-finish-strip {
+  border-block: 1px solid var(--uc-line);
+}
+
+html[data-brand="urban"] .uc-finish-chip {
+  gap: var(--s-3);
+  padding: var(--s-3) var(--s-4);
+  transition: background 0.26s var(--ease-settle);
+}
+
+html[data-brand="urban"] .uc-finish-chip:hover,
+html[data-brand="urban"] .uc-finish-chip.is-active {
+  background: rgba(92, 64, 51, 0.06);
+}
+
+html[data-brand="urban"] .uc-finish-swatch {
+  border: 1px solid var(--uc-line-strong);
+  transition: transform 0.32s var(--ease-settle), border-color 0.32s var(--ease-settle);
+}
+
+html[data-brand="urban"] .uc-finish-chip.is-active .uc-finish-swatch,
+html[data-brand="urban"] .uc-finish-chip:hover .uc-finish-swatch {
+  border-color: var(--uc-oak);
+  transform: scale(1.04);
+}
+
+/* ——— Filters ——— */
+html[data-brand="urban"] .filter-shell {
+  padding: var(--s-4) !important;
+}
+
+html[data-brand="urban"] .filter-option,
+html[data-brand="urban"] button[data-testid="sort-by-button"],
+html[data-brand="urban"] .uc-store-page button {
+  border-radius: 0 !important;
+  transition: border-color 0.24s var(--ease-settle), color 0.24s var(--ease-settle),
+    background 0.24s var(--ease-settle);
+}
+
+html[data-brand="urban"] .filter-option:hover,
+html[data-brand="urban"] .filter-option.is-active,
+html[data-brand="urban"] button[data-testid="sort-by-button"][aria-pressed="true"] {
+  border-color: var(--uc-oak) !important;
+  color: var(--uc-oak) !important;
+  background: rgba(92, 64, 51, 0.06) !important;
+}
+
+/* ——— PDP ——— */
+html[data-brand="urban"] .uc-pdp-info {
+  padding: var(--s-5) !important;
+}
+
+html[data-brand="urban"] .uc-telemetry,
+html[data-brand="urban"] .uc-spec-list,
+html[data-brand="urban"] .product-specs {
+  border: 1px solid var(--uc-line);
+  background: var(--uc-plaster);
+  padding: var(--s-3) var(--s-4);
+}
+
+html[data-brand="urban"] .uc-spec-list dt,
+html[data-brand="urban"] .uc-telemetry .label {
+  font-size: var(--type-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--uc-oak);
+  font-weight: 600;
+}
+
+html[data-brand="urban"] .uc-finish-swatch-pdp,
+html[data-brand="urban"] .uc-material-swatch {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--uc-line-strong);
+  box-shadow: none !important;
+}
+
+html[data-brand="urban"] .uc-finish-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+
+html[data-brand="urban"] .uc-finish-option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-3);
+  border: 1px solid var(--uc-line);
+  background: var(--uc-paper);
+  color: var(--uc-ink);
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: border-color 0.26s var(--ease-settle), background 0.26s var(--ease-settle);
+}
+
+html[data-brand="urban"] .uc-finish-option.is-active,
+html[data-brand="urban"] .uc-finish-option:hover {
+  border-color: var(--uc-oak);
+  background: rgba(92, 64, 51, 0.05);
+}
+
+html[data-brand="urban"] .uc-finish-option-swatch {
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 1px solid var(--uc-line-strong);
+  flex-shrink: 0;
+}
+
+html[data-brand="urban"] .uc-related {
+  padding-block: var(--s-7);
+  background: var(--uc-paper);
+  border-top: 1px solid var(--uc-line);
+}
+
+html[data-brand="urban"] .uc-related h2 {
+  font-family: var(--font-uc-display), "Instrument Serif", Georgia, serif !important;
+  font-size: var(--type-display-lg) !important;
+  font-weight: 400 !important;
+  color: var(--uc-ink) !important;
+}
+
+html[data-brand="urban"] .uc-atelier-close-title {
+  font-size: var(--type-display-lg) !important;
+  max-width: 16ch;
+}
+
+html[data-brand="urban"] .uc-spec-table {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: var(--s-2) var(--s-4);
+  border: 1px solid var(--uc-line);
+  background: var(--uc-plaster);
+  padding: var(--s-4);
+  margin-top: var(--s-4);
+}
+
+html[data-brand="urban"] .uc-spec-table dt {
+  font-size: var(--type-label);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--uc-oak);
+  font-weight: 600;
+}
+
+html[data-brand="urban"] .uc-spec-table dd {
+  margin: 0;
+  color: var(--uc-graphite);
+  font-size: 0.95rem;
+}
+
+/* ——— Cart ——— */
+html[data-brand="urban"] .uc-cart-page {
+  background: transparent !important;
+  color: var(--uc-ink);
+  padding-block: var(--s-6);
+}
+
+html[data-brand="urban"] .uc-cart-page a,
+html[data-brand="urban"] .uc-cart-page .text-ui-fg-interactive {
+  color: var(--uc-oak) !important;
+}
+
+html[data-brand="urban"] .uc-cart-page .bg-white {
+  padding: var(--s-4) !important;
+}
+
+/* ——— Footer ——— */
+html[data-brand="urban"] .uc-footer {
+  background: var(--uc-paper) !important;
+  border-top: 1px solid var(--uc-line-strong) !important;
+  color: var(--uc-graphite) !important;
+  margin-top: var(--s-7);
+  padding-block: var(--s-7) var(--s-5);
+}
+
+html[data-brand="urban"] .uc-footer .uc-brand {
+  color: var(--uc-ink) !important;
+}
+
+html[data-brand="urban"] .uc-footer a:hover {
+  color: var(--uc-oak) !important;
+}
+
+/* ——— Editorial search ——— */
+html[data-brand="urban"] .uc-nav-search {
+  position: relative;
+}
+
+html[data-brand="urban"] .uc-nav-search-trigger {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: var(--s-2) 0;
+  border: 0;
+  background: transparent;
+  color: var(--uc-graphite);
+  font-family: var(--font-uc-sans), Manrope, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: color 0.24s var(--ease-settle);
+}
+
+html[data-brand="urban"] .uc-nav-search-trigger:hover,
+html[data-brand="urban"] .uc-nav-search-trigger.is-open,
+html[data-brand="urban"] .uc-nav-search-trigger:focus-visible {
+  color: var(--uc-oak);
+  outline: none;
+  text-decoration: underline;
+  text-underline-offset: 0.35em;
+}
+
+html[data-brand="urban"] .uc-nav-search-panel {
+  position: absolute;
+  top: calc(100% + var(--s-2));
+  right: 0;
+  width: min(400px, 92vw);
+  background: var(--uc-paper);
+  z-index: 80;
+  padding: var(--s-4);
+  box-shadow: none !important;
+}
+
+html[data-brand="urban"] .uc-nav-search-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+html[data-brand="urban"] .uc-nav-search-field input {
+  width: 100%;
+  background: var(--uc-plaster);
+  border: 1px solid var(--uc-line);
+  color: var(--uc-ink);
+  font-family: var(--font-uc-sans), Manrope, sans-serif;
+  font-size: var(--type-body);
+  font-weight: 500;
+  padding: var(--s-3);
+  outline: none;
+  transition: border-color 0.24s var(--ease-settle);
+}
+
+html[data-brand="urban"] .uc-nav-search-field input:focus {
+  border-color: var(--uc-oak);
+}
+
+html[data-brand="urban"] .uc-nav-search-results {
+  margin-top: var(--s-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+html[data-brand="urban"] .uc-nav-search-hit {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: var(--s-3);
+  align-items: center;
+  padding: var(--s-2);
+  border: 1px solid transparent;
+  color: var(--uc-ink);
+  text-decoration: none;
+  transition: border-color 0.22s var(--ease-settle), background 0.22s var(--ease-settle);
+}
+
+html[data-brand="urban"] .uc-nav-search-hit.is-active,
+html[data-brand="urban"] .uc-nav-search-hit:hover {
+  border-color: var(--uc-line);
+  background: rgba(92, 64, 51, 0.05);
+}
+
+html[data-brand="urban"] .uc-nav-search-thumb {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  background: var(--uc-plaster);
+  border: 1px solid var(--uc-line);
+  overflow: hidden;
+}
+
+html[data-brand="urban"] .uc-nav-search-meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+  min-width: 0;
+}
+
+html[data-brand="urban"] .uc-nav-search-meta strong {
+  font-family: var(--font-uc-display), "Instrument Serif", Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+html[data-brand="urban"] .uc-nav-search-meta span {
+  font-family: var(--font-uc-sans), Manrope, sans-serif;
+  font-size: var(--type-label);
+  color: var(--uc-oak);
+  letter-spacing: 0.06em;
+  font-weight: 500;
+}
+
+html[data-brand="urban"] .uc-nav-search-empty {
+  font-family: var(--font-uc-sans), Manrope, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--uc-graphite);
+  padding: var(--s-3) var(--s-2);
+  margin: 0;
+}
+
+html[data-brand="urban"] .uc-mobile-search {
+  margin: var(--s-4) 0;
+  padding: 0 var(--s-4);
+}
+
+html[data-brand="urban"] .uc-mobile-search .uc-nav-search-panel {
+  position: static;
+  width: 100%;
+  margin-top: var(--s-2);
+}
+
+/* Focus visible — calm oak ring */
+html[data-brand="urban"] :focus-visible {
+  outline: 1px solid var(--uc-oak);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1023px) {
+  html[data-brand="urban"] .uc-nav-search-slot {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-brand="urban"] .uc-atelier-hero::after,
+  html[data-brand="urban"] body.uc-atelier::before {
+    animation: none !important;
+    opacity: 0.85;
+  }
+
+  html[data-brand="urban"] body.uc-atelier,
+  html[data-brand="urban"] .brand-body {
+    background-attachment: scroll !important;
+  }
+
+  html[data-brand="urban"] * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

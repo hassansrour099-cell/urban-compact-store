@@ -1,7 +1,6 @@
 import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { HttpTypes } from "@medusajs/types"
-import Carousel from "@modules/common/components/carousel"
 import Reveal from "@modules/common/components/reveal"
 import Product from "../product-preview"
 
@@ -21,18 +20,18 @@ export default async function RelatedProducts({
   }
 
   const queryParams: HttpTypes.StoreProductListParams = {
-    limit: 8,
+    limit: 5,
     is_giftcard: false,
   }
   if (region?.id) {
     queryParams.region_id = region.id
   }
 
-  let products = await listProducts({
+  const products = await listProducts({
     queryParams,
     countryCode,
   }).then(({ response }) =>
-    response.products.filter((p) => p.id !== product.id)
+    response.products.filter((p) => p.id !== product.id).slice(0, 5)
   )
 
   if (!products.length) {
@@ -40,25 +39,21 @@ export default async function RelatedProducts({
   }
 
   return (
-    <div className="content-container py-16 small:py-20">
+    <div className="content-container uc-related-inner">
       <Reveal>
-        <div className="mb-10">
-          <p className="uc-eyebrow">More to explore</p>
-          <h2 className="font-display text-3xl text-uc-ink small:text-4xl">
-            You might also like
-          </h2>
+        <div className="uc-related-head mb-10 max-w-xl">
+          <p className="uc-eyebrow">Complete the room</p>
+          <h2>Pieces that sit well beside this one.</h2>
         </div>
       </Reveal>
 
-      <Carousel
-        tone="urban"
-        label="Related products"
-        itemClassName="basis-[72%] xsmall:basis-[46%] small:basis-[30%] medium:basis-[23%]"
-      >
+      <ul className="uc-products-grid is-collection uc-related-grid">
         {products.map((p) => (
-          <Product key={p.id} region={region} product={p} isFeatured />
+          <li key={p.id}>
+            <Product region={region} product={p} />
+          </li>
         ))}
-      </Carousel>
+      </ul>
     </div>
   )
 }

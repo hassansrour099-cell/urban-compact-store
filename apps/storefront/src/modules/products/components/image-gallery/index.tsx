@@ -18,7 +18,7 @@ const ImageGallery = ({ images, tone = "urban" }: ImageGalleryProps) => {
     return (
       <div
         className={clx(
-          "relative aspect-[4/5] w-full",
+          "relative aspect-[5/6] w-full max-h-[min(32rem,58vh)]",
           tone === "urban" ? "bg-[#e8eeea]" : "bg-[#1a201c]"
         )}
       />
@@ -27,7 +27,7 @@ const ImageGallery = ({ images, tone = "urban" }: ImageGalleryProps) => {
 
   return (
     <div className={clx("product-gallery", `tone-${tone}`)}>
-      <Container className="product-gallery-main relative aspect-[4/5] w-full overflow-hidden !p-0 !rounded-none !shadow-none">
+      <Container className="product-gallery-main relative aspect-[5/6] w-full max-h-[min(32rem,58vh)] overflow-hidden !p-0 !rounded-none !shadow-none">
         {list.map((image, index) => (
           <div
             key={image.id}
@@ -44,7 +44,7 @@ const ImageGallery = ({ images, tone = "urban" }: ImageGalleryProps) => {
                 alt={`Product image ${index + 1}`}
                 fill
                 unoptimized
-                sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 800px"
+                sizes="(max-width: 576px) 100vw, (max-width: 992px) 40vw, 448px"
               />
             )}
           </div>

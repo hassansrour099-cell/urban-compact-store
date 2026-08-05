@@ -73,7 +73,7 @@ export const listProducts = async ({
           // Always request product images — callers sometimes override `fields`
           // without including them, which breaks thumbnails in the UI.
           fields:
-            "*variants.calculated_price,+variants.inventory_quantity,*variants.images,*variants.options,*images,+thumbnail,+metadata,+tags,",
+            "*variants.calculated_price,+variants.inventory_quantity,*variants.images,*variants.options,*images,+thumbnail,+metadata,+tags,*categories,",
         },
         headers,
         next,

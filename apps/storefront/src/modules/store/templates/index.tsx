@@ -22,16 +22,24 @@ const StoreTemplate = ({
   const sort = sortBy || "created_at"
 
   return (
-    <div className="store-page uc-store-page" data-testid="category-container">
-      <div className="store-page-glow" aria-hidden />
-      <div className="content-container uc-store-layout flex flex-col small:flex-row small:items-start gap-8 relative z-[1]">
-        <RefinementList sortBy={sort} />
-        <div className="w-full min-w-0">
-          <div className="uc-page-head">
-            <p className="uc-eyebrow">Catalog index</p>
-            <h1 data-testid="store-page-title">All pieces</h1>
-            <p>Engineered for footprints under pressure.</p>
-          </div>
+    <div
+      className="store-page uc-store-page uc-listing-page"
+      data-testid="category-container"
+      data-uc-room="collection"
+    >
+      <div className="content-container uc-store-layout relative z-[1]">
+        <header className="uc-page-head uc-listing-head">
+          <p className="uc-eyebrow">Collection</p>
+          <h1 data-testid="store-page-title">All pieces</h1>
+          <p>
+            Browse by room, material, and scale — photographed with space so
+            each piece can be judged honestly.
+          </p>
+        </header>
+        <div className="uc-listing-filters">
+          <RefinementList sortBy={sort} />
+        </div>
+        <div className="uc-listing-grid">
           <Suspense fallback={<SkeletonProductGrid />}>
             <PaginatedProducts
               sortBy={sort}

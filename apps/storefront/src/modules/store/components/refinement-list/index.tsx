@@ -64,12 +64,12 @@ const RefinementList = ({
     })
 
   return (
-    <aside className="filter-shell" data-testid={dataTestId}>
+    <aside className="filter-shell uc-filter-rail" data-testid={dataTestId}>
       <div className="filter-shell-head">
-        <p className="filter-shell-kicker">Refine</p>
-        <h2 className="filter-shell-title">Filters</h2>
+        <p className="filter-shell-kicker">Browse by</p>
+        <h2 className="filter-shell-title">Room and finish</h2>
       </div>
-      <div className="filter-shell-body">
+      <div className="filter-shell-body uc-filter-rail-body">
         <SortProducts sortBy={sortBy} setQueryParams={setQueryParams} />
         {!hideOptionsPicker && (
           <OptionsPicker
