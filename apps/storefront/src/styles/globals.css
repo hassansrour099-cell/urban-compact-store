@@ -901,3 +901,325 @@ body::before {
     transition: none !important;
   }
 }
+
+/* ——— Typography scale, gradients, filters, dropdowns ——— */
+html[data-brand="urban"] {
+  --font-display: var(--font-uc-display);
+  --font-body: var(--font-uc-sans);
+  --type-display-xl: clamp(3.2rem, 7vw, 5.5rem);
+  --type-display-lg: clamp(2.4rem, 4.5vw, 3.6rem);
+  --type-display-md: clamp(1.85rem, 3vw, 2.5rem);
+  --type-body-lg: 1.125rem;
+  --type-body: 1rem;
+  --type-sm: 0.875rem;
+  --type-xs: 0.75rem;
+}
+
+html[data-brand="street"] {
+  --font-display: var(--font-ps-display);
+  --font-body: var(--font-ps-sans);
+  --type-display-xl: clamp(3.6rem, 9vw, 6.5rem);
+  --type-display-lg: clamp(2.6rem, 5.5vw, 4.2rem);
+  --type-display-md: clamp(2rem, 3.5vw, 3rem);
+  --type-body-lg: 1.125rem;
+  --type-body: 1rem;
+  --type-sm: 0.875rem;
+  --type-xs: 0.75rem;
+}
+
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+html[data-brand="street"] .font-display {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.brand-body {
+  font-size: var(--type-body);
+  line-height: 1.6;
+}
+
+html[data-brand="urban"] .brand-body {
+  background:
+    radial-gradient(1100px 700px at 8% -8%, rgba(143, 176, 158, 0.28), transparent 58%),
+    radial-gradient(900px 600px at 100% 0%, rgba(168, 190, 210, 0.28), transparent 52%),
+    linear-gradient(180deg, #f7faf8 0%, #eef3f0 45%, #f5f8f6 100%);
+  color: var(--uc-ink);
+}
+
+html[data-brand="street"] .brand-body {
+  background:
+    radial-gradient(900px 520px at 95% -10%, rgba(200, 245, 66, 0.16), transparent 55%),
+    radial-gradient(700px 480px at 0% 20%, rgba(64, 120, 255, 0.12), transparent 50%),
+    linear-gradient(180deg, #101412 0%, #0b0e0c 40%, #121614 100%);
+  color: var(--ps-paper);
+}
+
+.uc-page-head h1,
+.ps-page-head h1,
+.lookbook-title,
+.uc-hero h1,
+.ps-hero h1 {
+  font-size: var(--type-display-xl);
+  line-height: 0.98;
+}
+
+.uc-section-head h2,
+.ps-home h2,
+.filter-shell-title {
+  font-size: var(--type-display-md);
+  line-height: 1.1;
+}
+
+.uc-brand {
+  font-family: var(--font-uc-display), Georgia, serif !important;
+  font-size: 1.55rem !important;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.ps-brand {
+  font-family: var(--font-ps-display), Impact, sans-serif !important;
+  font-size: 1.85rem !important;
+  letter-spacing: 0.04em;
+}
+
+.uc-nav-link,
+.ps-nav-link {
+  font-size: 0.82rem;
+}
+
+.store-page {
+  position: relative;
+  isolation: isolate;
+  padding-block: 1.5rem 3.5rem;
+  overflow: hidden;
+}
+
+.store-page-glow {
+  position: absolute;
+  inset: -10% -5% auto;
+  height: 55%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.uc-store-page .store-page-glow {
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(111, 133, 120, 0.22), transparent 60%),
+    radial-gradient(ellipse at 90% 10%, rgba(170, 196, 214, 0.2), transparent 55%);
+}
+
+.ps-store-page .store-page-glow {
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(64, 120, 255, 0.18), transparent 55%),
+    radial-gradient(ellipse at 90% 0%, rgba(200, 245, 66, 0.16), transparent 50%);
+}
+
+.filter-shell {
+  width: 100%;
+  max-width: 280px;
+  padding: 1.15rem 1.15rem 1.35rem;
+  border: 1px solid transparent;
+  position: sticky;
+  top: 5.5rem;
+  align-self: flex-start;
+}
+
+html[data-brand="urban"] .filter-shell {
+  background: linear-gradient(165deg, rgba(255,255,255,0.78), rgba(232,238,233,0.9));
+  border-color: var(--uc-line);
+  box-shadow: 0 18px 40px rgba(28, 36, 33, 0.06);
+  backdrop-filter: blur(10px);
+}
+
+html[data-brand="street"] .filter-shell {
+  background: linear-gradient(165deg, rgba(28, 36, 32, 0.95), rgba(16, 20, 17, 0.98));
+  border-color: var(--ps-line);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.filter-shell-kicker {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+html[data-brand="urban"] .filter-shell-kicker { color: var(--uc-sage); }
+html[data-brand="street"] .filter-shell-kicker { color: var(--ps-accent); }
+
+.filter-shell-title {
+  font-family: var(--font-display), Georgia, serif;
+  margin-bottom: 1.1rem;
+}
+
+html[data-brand="urban"] .filter-shell-title { color: var(--uc-ink); }
+html[data-brand="street"] .filter-shell-title { color: var(--ps-paper); }
+
+.filter-shell-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.filter-group-title {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+}
+
+html[data-brand="urban"] .filter-group-title { color: var(--uc-muted); }
+html[data-brand="street"] .filter-group-title { color: var(--ps-muted); }
+
+.filter-group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.filter-option {
+  border: 1px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+html[data-brand="urban"] .filter-option {
+  background: rgba(255,255,255,0.35);
+  border-color: rgba(28,36,33,0.06);
+}
+html[data-brand="urban"] .filter-option.is-active {
+  background: linear-gradient(90deg, rgba(111,133,120,0.18), rgba(255,255,255,0.5));
+  border-color: rgba(111,133,120,0.45);
+}
+
+html[data-brand="street"] .filter-option {
+  background: rgba(255,255,255,0.03);
+  border-color: var(--ps-line);
+}
+html[data-brand="street"] .filter-option.is-active {
+  background: linear-gradient(90deg, rgba(200,245,66,0.16), rgba(255,255,255,0.03));
+  border-color: rgba(200,245,66,0.45);
+}
+
+.filter-option-label {
+  display: flex !important;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.65rem 0.7rem !important;
+  margin: 0 !important;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+  transform: none !important;
+}
+
+html[data-brand="urban"] .filter-option-label { color: var(--uc-ink) !important; }
+html[data-brand="street"] .filter-option-label { color: var(--ps-paper) !important; }
+
+.filter-option-dot {
+  width: 0.9rem;
+  display: inline-flex;
+  justify-content: center;
+  opacity: 0.8;
+}
+
+.filter-options [data-radix-collection-item],
+.filter-options button {
+  transition: color 0.2s ease;
+}
+
+.nav-cart-panel {
+  overflow: hidden;
+  border: 1px solid transparent;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.14);
+  backdrop-filter: blur(12px);
+  z-index: 60;
+}
+
+html[data-brand="urban"] .nav-cart-panel {
+  background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(239,244,240,0.96));
+  border-color: var(--uc-line);
+  color: var(--uc-ink);
+}
+
+html[data-brand="street"] .nav-cart-panel {
+  background: linear-gradient(180deg, rgba(24,30,26,0.98), rgba(12,15,13,0.98));
+  border-color: var(--ps-line);
+  color: var(--ps-paper);
+}
+
+.nav-cart-panel-head {
+  padding: 1rem 1.1rem;
+  border-bottom: 1px solid rgba(128,128,128,0.18);
+  background: linear-gradient(90deg, rgba(111,133,120,0.12), transparent);
+}
+
+html[data-brand="street"] .nav-cart-panel-head {
+  background: linear-gradient(90deg, rgba(200,245,66,0.12), transparent);
+}
+
+.nav-cart-panel-head h3 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.brand-select {
+  border: 1px solid transparent;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+html[data-brand="urban"] .brand-select {
+  background: linear-gradient(180deg, #fff, #f3f7f4);
+  border-color: var(--uc-line);
+  color: var(--uc-ink);
+}
+html[data-brand="urban"] .brand-select:hover {
+  border-color: var(--uc-sage);
+  box-shadow: 0 0 0 3px rgba(111,133,120,0.12);
+}
+
+html[data-brand="street"] .brand-select {
+  background: linear-gradient(180deg, #1a211d, #121714);
+  border-color: var(--ps-line);
+  color: var(--ps-paper);
+}
+html[data-brand="street"] .brand-select:hover {
+  border-color: rgba(200,245,66,0.45);
+  box-shadow: 0 0 0 3px rgba(200,245,66,0.1);
+}
+
+.brand-select.is-placeholder {
+  color: inherit;
+  opacity: 0.7;
+}
+
+.brand-select select {
+  color: inherit;
+}
+
+.uc-side-panel,
+.ps-side-panel {
+  background: linear-gradient(165deg, rgba(255,255,255,0.95), rgba(236,242,238,0.96)) !important;
+}
+
+.ps-side-panel {
+  background: linear-gradient(165deg, rgba(24,30,26,0.98), rgba(10,12,11,0.98)) !important;
+}
+
+@media (max-width: 1023px) {
+  .filter-shell {
+    max-width: none;
+    position: static;
+  }
+}

@@ -64,19 +64,21 @@ const RefinementList = ({
     })
 
   return (
-    <div className="flex flex-col gap-12 py-4 mb-8 small:px-0 pl-6 small:min-w-[250px] small:ml-[1.675rem]">
-      <SortProducts
-        sortBy={sortBy}
-        setQueryParams={setQueryParams}
-        data-testid={dataTestId}
-      />
-      {!hideOptionsPicker && (
-        <OptionsPicker
-          selectedValueIds={selectedOptionValueIds}
-          setOptionValueIds={setOptionValueIds}
-        />
-      )}
-    </div>
+    <aside className="filter-shell" data-testid={dataTestId}>
+      <div className="filter-shell-head">
+        <p className="filter-shell-kicker">Refine</p>
+        <h2 className="filter-shell-title">Filters</h2>
+      </div>
+      <div className="filter-shell-body">
+        <SortProducts sortBy={sortBy} setQueryParams={setQueryParams} />
+        {!hideOptionsPicker && (
+          <OptionsPicker
+            selectedValueIds={selectedOptionValueIds}
+            setOptionValueIds={setOptionValueIds}
+          />
+        )}
+      </div>
+    </aside>
   )
 }
 

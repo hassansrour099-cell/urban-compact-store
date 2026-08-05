@@ -1,16 +1,18 @@
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
-import { Fraunces, Outfit } from "next/font/google"
+import { Cormorant_Garamond, Figtree } from "next/font/google"
 import "styles/globals.css"
 
-const display = Fraunces({
+const display = Cormorant_Garamond({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-uc-display",
   display: "swap",
 })
 
-const sans = Outfit({
+const sans = Figtree({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-uc-sans",
   display: "swap",
 })
@@ -26,8 +28,13 @@ export const metadata: Metadata = {
 
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-mode="light" className={`${display.variable} ${sans.variable}`}>
-      <body className={sans.className}>
+    <html
+      lang="en"
+      data-mode="light"
+      data-brand="urban"
+      className={`${display.variable} ${sans.variable}`}
+    >
+      <body className={`${sans.className} brand-body`}>
         <main className="relative">{props.children}</main>
       </body>
     </html>

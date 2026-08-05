@@ -55,9 +55,9 @@ const OptionsPicker = ({
   }
 
   return (
-    <div className="flex flex-col gap-y-4">
+    <div className="filter-options">
       <div className="flex items-center justify-between px-1">
-        <span className="txt-compact-small-plus text-ui-fg-subtle">
+        <span className="filter-group-title">
           Options
         </span>
       </div>
