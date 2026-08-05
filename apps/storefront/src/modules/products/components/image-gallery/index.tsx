@@ -43,6 +43,7 @@ const ImageGallery = ({ images, tone = "urban" }: ImageGalleryProps) => {
                 className="object-cover"
                 alt={`Product image ${index + 1}`}
                 fill
+                unoptimized
                 sizes="(max-width: 576px) 100vw, (max-width: 992px) 50vw, 800px"
               />
             )}
