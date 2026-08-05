@@ -23,13 +23,18 @@ export default async function ProductPreview({
       href={`/products/${product.handle}`}
       className="group uc-product-card block"
     >
-      <div data-testid="product-wrapper">
-        <Thumbnail
-          thumbnail={product.thumbnail}
-          images={product.images}
-          size="full"
-          isFeatured={isFeatured}
-        />
+      <div data-testid="product-wrapper" className="uc-product-shell">
+        <div className="uc-product-media">
+          <Thumbnail
+            thumbnail={product.thumbnail}
+            images={product.images}
+            size="full"
+            isFeatured={isFeatured}
+          />
+          <span className="uc-product-hover">
+            <span>View piece</span>
+          </span>
+        </div>
         <div className="uc-product-meta">
           <Text className="uc-product-title" data-testid="product-title">
             {product.title}

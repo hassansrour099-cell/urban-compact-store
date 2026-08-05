@@ -1,7 +1,10 @@
 import { HttpTypes } from "@medusajs/types"
 import Carousel from "@modules/common/components/carousel"
+import Marquee from "@modules/common/components/marquee"
+import ParallaxMedia from "@modules/common/components/parallax-media"
 import Reveal from "@modules/common/components/reveal"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import LookbookSwap from "@modules/home/components/lookbook-swap"
 import ProductPreview from "@modules/products/components/product-preview"
 
 const categoryArt: Record<string, string> = {
@@ -28,6 +31,18 @@ export default function HomeCatalog({
 
   return (
     <div className="uc-home">
+      <Marquee
+        tone="urban"
+        items={[
+          "Living",
+          "Sleep",
+          "Work",
+          "Storage",
+          "Studio-ready",
+          "Quiet materials",
+        ]}
+      />
+
       <section className="content-container py-16 small:py-24">
         <Reveal>
           <div className="uc-section-head mb-10">
@@ -69,6 +84,8 @@ export default function HomeCatalog({
         </Carousel>
       </section>
 
+      <LookbookSwap tone="urban" />
+
       <section className="uc-band py-16 small:py-20">
         <div className="content-container">
           <Reveal>
@@ -100,18 +117,15 @@ export default function HomeCatalog({
       </section>
 
       <Reveal>
-        <section className="uc-split relative overflow-hidden">
-          <div
-            className="uc-split-media absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url(https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1800&q=80)",
-            }}
-            aria-hidden
+        <section className="uc-split relative overflow-hidden min-h-[460px]">
+          <ParallaxMedia
+            image="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1800&q=80"
+            className="absolute inset-0"
+            intensity={22}
           />
           <div className="uc-split-veil absolute inset-0" aria-hidden />
-          <div className="relative z-10 content-container flex min-h-[420px] items-center py-16">
-            <div className="max-w-lg">
+          <div className="relative z-10 content-container flex min-h-[460px] items-center py-16">
+            <div className="max-w-lg uc-glass-panel">
               <p className="uc-eyebrow">Made for city living</p>
               <h2 className="font-display text-3xl text-uc-ink small:text-5xl">
                 Quiet forms. Honest materials.
@@ -124,6 +138,12 @@ export default function HomeCatalog({
           </div>
         </section>
       </Reveal>
+
+      <Marquee
+        tone="urban"
+        speed="slow"
+        items={["Under 60″ sofas", "Nesting tables", "Wall desks", "Slim storage"]}
+      />
     </div>
   )
 }
