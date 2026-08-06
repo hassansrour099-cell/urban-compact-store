@@ -14,4 +14,8 @@ module.exports = defineConfig({
       cookieSecret: process.env.COOKIE_SECRET,
     },
   },
+  admin: {
+    // Contabo images set DISABLE_MEDUSA_ADMIN=true until admin assets are verified
+    disable: process.env.DISABLE_MEDUSA_ADMIN === "true",
+  },
 })
